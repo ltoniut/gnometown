@@ -1,24 +1,35 @@
-import React, { useState, FC } from 'react';
-import CitizenDetails from './CitizenDetails';
-import { styles } from '../styles';
-import { CitizenData } from '../interfaces';
+import { css } from "emotion";
+import React, { FC, useState } from "react";
+import { CitizenData } from "../interfaces";
+import { CitizenDetails } from "./CitizenDetails";
 
-const Citizen: FC<CitizenData> = data => {
-  const [name] = useState<string>(data.name);
-  const [image] = useState<string>(data.thumbnail);
+interface Props extends CitizenData {}
+
+export const Citizen: FC<Props> = ({ name, thumbnail, ...props }) => {
+  // REVIEW No need for state, you have props already.
+  // const [name] = useState<string>(data.name);
+  // const [image] = useState<string>(data.thumbnail);
   const [display, setDisplay] = useState<boolean>(false);
 
   return (
-    <div className= { styles.citizen } onClick={() => setDisplay(!display)}>
-      <img className = {styles.citizenPicture} src={image}></img>
+    <div className={styles.component} onClick={() => setDisplay(!display)}>
+      <img className={styles.thumbnail} src={thumbnail}></img>
       <div>{name}</div>
-      {display && <CitizenDetails
-        height = { data.height }
-        weight = { data.weight }
-        professions = { data.professions }
-        age = { data.age } />}
+      {display && <CitizenDetails {...props} />}
     </div>
-  )
-}
+  );
+};
 
-export default Citizen;
+const styles = {
+  component: css`
+    padding-bottom: 7px;
+    text-align: left;
+    border: 1px;
+    border-color: black;
+    border-style: solid;
+  `,
+  thumbnail: css`
+    max-height: 100px;
+    max-width: 150px;
+  `
+};

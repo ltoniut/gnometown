@@ -1,28 +1,22 @@
-import React, { useState, useEffect } from "react";
-import Stage from "./components/Stage";
+import React, { FC, useEffect, useState } from "react";
 import "./App.css";
-import { styles } from './styles';
+import { Stage } from "./components/Stage";
+import { css } from "emotion";
+import { useAsyncEffect } from "use-async-effect";
 
-const Sources: any = require('./sources.json');
+// TODO Review any
+const Sources: any = require("./sources.json");
 
-const App = () => {
+export const App: FC = () => {
   const [fileName, setFileName] = useState<string>(Sources.town);
   const [JSONData, setJSONData] = useState<any>();
-  
-  useEffect(() => { 
-    if(!JSONData) {
-      fetchData();
-    }
-  });
 
-  if(!JSONData) {
-    fetchData();
-
-    console.log(JSON.stringify(JSONData));
-  }
-
-  const [, updateState] = React.useState();
-  const forceUpdate = React.useCallback(() => updateState({}), []);
+  useEffect(() => {Promise.resolve(async () => {
+    await fetch(fileName as string)
+      .then(res => res.json())
+      .then(res => setJSONData(res));
+      });
+    }, [fileName]);
 
   async function fetchData() {
     const parsedJson = await fetch(fileName as string)
@@ -31,14 +25,22 @@ const App = () => {
     .then(res => console.log(fileName as string))
     .then(res => console.log(JSONData));
   }
-  React.useEffect(() => console.log(JSONData), [JSONData]);
 
-  return JSONData ? 
-      <div className = { styles.mainApp }>
-        <Stage townData = {JSONData} />
+  useEffect(() => console.log(JSONData), [JSONData]);
+  return (
+    JSONData && (
+      <div className={styles.component}>
+        <Stage townData={JSONData} />
       </div>
-  :
-    <div></div>
-}
+    )
+  );
+};
 
-export default App;
+const styles = {
+  component: css`
+    width: 100%;
+    height: 90vh;
+    text-align: center;
+    margin-top: 0%;
+    `
+}

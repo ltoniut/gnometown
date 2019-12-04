@@ -1,26 +1,30 @@
-import React, { useState } from 'react';
-import NameDisplay from './NameDisplay';
-import CitizenManager from './CitizenManager';
-import { styles } from '../styles';
-import { CitizenData } from '../interfaces';
+import React, { useState } from "react";
+import { NameDisplay } from "./NameDisplay";
+import { CitizenManager } from "./CitizenManager";
+import { CitizenData } from "../interfaces";
+import { css } from "emotion";
 
-
-const Stage = props => {
-  console.log(props.townData);
+export const Stage = props => {
   const nameData = Object.keys(props.townData)[0];
-  const citizenData : Array<CitizenData>  = props.townData[Object.keys(props.townData)[0]];
-  const [townName, setTownName] = useState<string>(nameData);
-  const [townData, setTownData] = useState<Array<CitizenData>>(citizenData);
+  const citizenData: Array<CitizenData> =
+    props.townData[Object.keys(props.townData)[0]];
+  const [townName] = useState<string>(nameData);
+  const [townData] = useState<Array<CitizenData>>(citizenData);
 
-  return props.townData ?
-      <div className = {styles.stage}>
-        <NameDisplay title={townName} />
-        <CitizenManager data={townData} />
-      </div> :
-      <div className = {styles.stage}>
-        <NameDisplay title={townName} />
-        <CitizenManager data={townData} />
-      </div>
-}
+  return <div className={styles.component}>
+      <NameDisplay title={townName} />
+      <CitizenManager data={townData} />
+    </div>
+};
 
-export default Stage;
+const styles = {
+  component: css`
+    width: 80%;
+    height: 90%;
+    margin-top: 5%;
+    background-image: url("http://www.juegomania.org/Heimdall+2/foto/pc/6/6920/498842.jpg/Foto+Heimdall+2.jpg");
+    background-size: 100% 100%;
+    margin-left: auto;
+    margin-right: auto;
+  `
+};
