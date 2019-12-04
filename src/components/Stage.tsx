@@ -10,7 +10,7 @@ const Stage = props => {
   const nameData = Object.keys(props.townData)[0];
   const citizenData : Array<CitizenData>  = props.townData[Object.keys(props.townData)[0]];
   const [townName, setTownName] = useState<string>(nameData);
-  const [townData, setTownData] = useState<Array<any>>(citizenData);
+  const [townData, setTownData] = useState<Array<CitizenData>>(citizenData);
 
   return props.townData ?
       <div className = {styles.stage}>

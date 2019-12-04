@@ -1,12 +1,19 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, FC } from 'react';
 import Citizen from './Citizen';
 import { styles } from '../styles';
 import { CitizenData } from '../interfaces';
+import { Subject } from 'rxjs';
+
+type ListData = {
+  filter: string;
+  inputs$: Subject<string>;
+  data: Array<CitizenData>;
+}
 
 
-const CitizenList = props => {
+const CitizenList: FC<ListData> = props => {
   const inputs$ = props.inputs$;
-  const [citizenData, setCitizenData] = useState<any>(props.data)
+  const [citizenData, setCitizenData] = useState<Array<CitizenData>>(props.data)
   const [filter, setFilter] = useState<string>(props.filter);
   const [start, setStart] = useState<number>(0);
   const [scrolling, setScrolling] = useState<boolean>(false);
@@ -53,7 +60,14 @@ const CitizenList = props => {
   }  
 
   const listCitizens = citizenData.slice(start, start + 15).map((citizen: any) =>
-    <Citizen key={citizen.id} data={citizen} />
+    <Citizen
+      id = { citizen.id }
+      name = { citizen.name }
+      thumbnail = { citizen.thumbnail }
+      professions = { citizen.professions }
+      age = { citizen.age }
+      height = { citizen.height }
+      weight = { citizen.weight } />
   );
 
   return (

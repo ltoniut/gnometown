@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 
-const CitizenDetails = props => {
-  const [height, setHeight] = useState<string>(props.data.height);
-  const [weight, setWeight] = useState<string>(props.data.weight);
-  const [professions, setProfessions] = useState<Array<string>>(props.data.professions);
+type Details = {
+  age: number;
+  weight: number;
+  height: number;
+  professions: Array<string>;
+}
+
+const CitizenDetails: FC<Details> = data => {
+  const [height] = useState<number>(data.height);
+  const [weight] = useState<number>(data.weight);
+  const [professions] = useState<Array<string>>(data.professions);
 
   return (
     <div>
