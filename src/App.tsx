@@ -16,8 +16,7 @@ export const App: FC = () => {
   useAsyncEffect(async () => {
     await fetch(fileName as string)
       .then(res => res.json())
-      .then(res => setTowns(res))
-      .then(res => console.log(res));
+      .then(res => setTowns(res));
   }, [fileName]);
 
   const townO = pipe(

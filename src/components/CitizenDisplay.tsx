@@ -27,11 +27,15 @@ export const CitizenDisplay: FC<Props> = ({ name, thumbnail, ...props }) => {
 
 const styles = {
   component: css`
-    padding-bottom: 7px;
-    text-align: left;
-    border: 1px;
-    border-color: black;
+    padding-bottom: 3%;
+    padding-top: 3%;
+    text-align: center;
+    border: 2px;
+    border-color: #9a861a;
     border-style: solid;
+    border-radius: 10px;
+    margin-left: 2%;
+    margin-right: 2%;
   `,
   thumbnail: css`
     max-height: 100px;

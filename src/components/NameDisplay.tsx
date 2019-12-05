@@ -1,51 +1,44 @@
 import { css } from "emotion";
 import React, { FC, useState, useEffect } from "react";
+import { connect, ConnectedProps } from "react-redux";
 
-interface Props {
+type Props = PropsFromRedux & {
   title: string;
-}
+};
 
-export const NameDisplay: FC<Props> = ({ title }) => {
-  const [display, setDisplay] = useState<boolean>(true);
-
-  useEffect(() => {
+const NameDisplay: FC<Props> = props => {
+  /*useEffect(() => {
     const t = setTimeout(() => setDisplay(false), 7000); // Hide town name after 7 seconds
     return () => clearTimeout(t);
-  }, []);
+  }, []);*/
 
   return (
-    <div className={styles.component} onClick={() => setDisplay(false)}>
-      {display && <a>{title}</a>}
+    <div className={styles.component} onClick={props.onClick}>
+      {props.display && <a>{props.title}</a>}
     </div>
   );
 };
 
 //Reducer
 
-const mapStateToProps = state => ({
-  displayName: state.display
+interface RootDisplay {
+  display: boolean;
+}
+
+const mapState = (state: RootDisplay) => ({
+  display: state.display,
 });
 
-const mapDispatchToProps = dispatch => ({
-  onClick: () =>
-    dispatch({
-      type: "SHOW_NAME",
-      payload: false
-    })
-});
-
-const initialState = {
-  displayName: true
+const mapDispatch = {
+  onClick: () => ({
+    type: "SHOW_NAME",
+    payload: false,
+  }),
 };
 
-export default (state = initialState, action) => {
-  switch (action.type) {
-    case "SHOW_MY_COMPONENT":
-      return { ...state, showMyComponent: action.payload };
-    default:
-      return state;
-  }
-};
+const connector = connect(mapState, mapDispatch);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const styles = {
   component: css`
@@ -54,5 +47,7 @@ const styles = {
     position: absolute;
     font-size: 7vh;
     width: 80%;
-  `
+  `,
 };
+
+export default connector(NameDisplay);

@@ -61,8 +61,11 @@ export const CitizenList: FC<Props> = ({ inputs$, citizens }) => {
         {pipe(
           filteredCitizens.slice(start, start + 15),
           A.map(c => (
-            <CitizenDetails
-              key={c.name}
+            <CitizenDisplay
+              key={c.id}
+              id={c.id}
+              name={c.name}
+              thumbnail={c.thumbnail}
               professions={c.professions}
               age={c.age}
               height={c.height}
@@ -79,6 +82,8 @@ const styles = {
   list: css`
     height: 91%;
     width: 100%;
+    padding-right: 3vh;
+    float: left;
     overflow-y: scroll;
   `,
 };

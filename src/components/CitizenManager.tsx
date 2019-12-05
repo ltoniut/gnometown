@@ -27,10 +27,14 @@ export const CitizenManager: FC<Props> = ({ citizens }) => {
       </div>
       {display && (
         <div className={styles.manager}>
-          <div className={styles.filter}>
+          <div className={styles.filterContainer}>
             Filter Citizens:
             <br />
-            <input type="text" onChange={e => inputs$.next(e.target.value)} />
+            <input
+              className={styles.filterInput}
+              type="text"
+              onChange={e => inputs$.next(e.target.value)}
+            />
           </div>
           <CitizenList citizens={citizens} inputs$={inputs$ as Subject<string>} />
         </div>
@@ -43,12 +47,13 @@ const styles = {
   bar: css`
     float: right;
     height: 100%;
-    background-color: brown;
+    background-color: #9c5151;
   `,
   manager: css`
     float: right;
+    margin-right: 3vh;
     height: 100%;
-    width: 30vh;
+    width: 27vh;
   `,
   arrow: css`
     background-image: url("https://previews.123rf.com/images/eglazunoff/eglazunoff1811/eglazunoff181100189/112852645-paper-texture-background-crumpled-paper-texture-background-paper-textures-.jpg");
@@ -56,8 +61,11 @@ const styles = {
     width: 3.5vh;
     height: 100%;
   `,
-  filter: css`
-    padding-top: 2%;
+  filterContainer: css`
+    padding-top: 4%;
     height: 7%;
+  `,
+  filterInput: css`
+    margin-top: 4%;
   `,
 };
