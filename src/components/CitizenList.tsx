@@ -5,11 +5,17 @@ import { CitizenDisplay } from "./CitizenDisplay";
 import { css } from "emotion";
 import { CitizenDetails } from "./CitizenDetails";
 import { A, pipe } from "../prelude.d";
+import { traverse } from "fp-ts/lib/Record";
+
+const assets = require("../assets.json");
 
 interface Props {
   inputs$: Subject<string>;
   citizens: Array<Citizen>;
 }
+
+const upArrow: string = assets.upArrow;
+const downArrow: string = assets.downArrow;
 
 export const CitizenList: FC<Props> = ({ inputs$, citizens }) => {
   const [allCitizens] = useState<Array<Citizen>>(citizens);
@@ -19,24 +25,26 @@ export const CitizenList: FC<Props> = ({ inputs$, citizens }) => {
   const [scrolling, setScrolling] = useState<boolean>(false);
   const listRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (listRef.current && scrolling) {
-      const refValue = listRef.current;
-      if (refValue.scrollHeight + refValue.scrollTop === refValue.clientHeight) {
-        setScrolling(false);
-        if (start < filteredCitizens.length) {
-          setStart(start + 8);
-        }
-        listRef.current.scrollTop = 20;
-      } else if (refValue.scrollTop === 0) {
-        setScrolling(false);
-        if (start > 0) {
-          setStart(start - 8);
-        }
-        listRef.current.scrollTop = refValue.clientHeight - refValue.scrollHeight - 20;
+  const quantityDisplayed = 15;
+  const scrollDistance = 5;
+
+  const traverse = (direction: string) => {
+    switch (direction) {
+      case "down":
+        console.log("traversing down");
+        start + quantityDisplayed < filteredCitizens.length
+          ? setStart(start + 8)
+          : console.log("Reached bottom");
+        break;
+      case "up":
+        start > 0 ? setStart(start - 8) : console.log("Reached top");
+        break;
+      default: {
+        console.log("Do nothing");
+        break;
       }
     }
-  }, [scrolling]);
+  };
 
   useEffect(() => {
     const s = inputs$.subscribe(f => setFilter(f));
@@ -57,9 +65,12 @@ export const CitizenList: FC<Props> = ({ inputs$, citizens }) => {
 
   return (
     <div className={styles.list} ref={listRef} onScroll={() => setScrolling(true)}>
-      <ul>
+      <div className={styles.directionalButton} onClick={() => traverse("up")}>
+        <img className={styles.arrow} src={upArrow}></img>
+      </div>
+      <ul className={styles.citizens}>
         {pipe(
-          filteredCitizens.slice(start, start + 15),
+          filteredCitizens.slice(start, start + quantityDisplayed),
           A.map(c => (
             <CitizenDisplay
               key={c.id}
@@ -74,6 +85,9 @@ export const CitizenList: FC<Props> = ({ inputs$, citizens }) => {
           )),
         )}
       </ul>
+      <div className={styles.directionalButton} onClick={() => traverse("down")}>
+        <img className={styles.arrow} src={downArrow}></img>
+      </div>
     </div>
   );
 };
@@ -82,8 +96,23 @@ const styles = {
   list: css`
     height: 91%;
     width: 100%;
-    padding-right: 3vh;
     float: left;
     overflow-y: scroll;
+  `,
+  citizens: css`
+    padding-right: 3vh;
+    padding-top: 3vh;
+  `,
+  directionalButton: css`
+    width: 100%;
+    float: right;
+    background-color: gold;
+    padding: 2%;
+    background-color: rgba(200, 180, 100, 5);
+  `,
+  arrow: css`
+    margin: auto;
+    vertical-align: center;
+    max-width: 3vh;
   `,
 };

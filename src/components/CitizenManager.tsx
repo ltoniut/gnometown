@@ -14,16 +14,20 @@ export const CitizenManager: FC<Props> = ({ citizens }) => {
   const [display, setDisplay] = useState<boolean>(true);
   const [inputs$] = useState(() => new Subject());
 
-  function hideComponent() {
-    setDisplay(false);
-  }
+  const rightArrow: string = assets.rightArrow;
+  const leftArrow: string = assets.leftArrow;
 
-  const rightArrow: string = "assets/" + assets.rightArrowAsset;
+  const [arrowDirection, setArrowDirection] = useState<string>(rightArrow);
+
+  const useSlider = () => {
+    setDisplay(!display);
+    setArrowDirection(arrowDirection == leftArrow ? rightArrow : leftArrow);
+  };
 
   return (
     <div className={styles.bar}>
-      <div className={styles.arrow} onClick={() => setDisplay(!display)}>
-        <img src={rightArrow} />
+      <div className={styles.slider} onClick={useSlider}>
+        <img className={styles.arrow} src={arrowDirection} />
       </div>
       {display && (
         <div className={styles.manager}>
@@ -47,7 +51,7 @@ const styles = {
   bar: css`
     float: right;
     height: 100%;
-    background-image: url("http://2.bp.blogspot.com/-HPWq5_H10Bs/U4NbaH3_WoI/AAAAAAAAO-w/3tOklJ2MBcE/s1600/Seamless_Natural_Wood_Texture.jpg");
+    background-image: url("/assets/manager-background.jpg");
   `,
   manager: css`
     float: right;
@@ -56,16 +60,22 @@ const styles = {
     width: 27vh;
   `,
   arrow: css`
+    margin: auto;
+    vertical-align: center;
+    max-height: 3vh;
+  `,
+  slider: css`
     background-color: #a5412a;
     float: left;
-    width: 3.5vh;
+    vertical-align: center;
+    width: 4.5vh;
     height: 100%;
   `,
   filterContainer: css`
-    padding-top: 4%;
+    padding: 4%;
     height: 7%;
   `,
   filterInput: css`
-    padding-top: 4%;
+    margin-top: 4%;
   `,
 };
