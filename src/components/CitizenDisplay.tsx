@@ -1,18 +1,23 @@
 import { css } from "emotion";
 import React, { FC, useState } from "react";
-import { CitizenData } from "../interfaces";
+import { Citizen } from "../interfaces";
 import { CitizenDetails } from "./CitizenDetails";
 
-interface Props extends CitizenData {}
+interface Props extends Citizen {}
 
-export const Citizen: FC<Props> = ({ name, thumbnail, ...props }) => {
+export const CitizenDisplay: FC<Props> = ({ name, thumbnail, ...props }) => {
   // REVIEW No need for state, you have props already.
   // const [name] = useState<string>(data.name);
   // const [image] = useState<string>(data.thumbnail);
   const [display, setDisplay] = useState<boolean>(false);
 
   return (
-    <div className={styles.component} onClick={() => setDisplay(!display)}>
+    <div
+      className={styles.component}
+      onClick={() => {
+        return setDisplay(!display);
+      }}
+    >
       <img className={styles.thumbnail} src={thumbnail}></img>
       <div>{name}</div>
       {display && <CitizenDetails {...props} />}
@@ -31,5 +36,5 @@ const styles = {
   thumbnail: css`
     max-height: 100px;
     max-width: 150px;
-  `
+  `,
 };

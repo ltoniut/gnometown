@@ -1,21 +1,20 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import { Subject } from "rxjs";
-import { CitizenData } from "../interfaces";
-import { Citizen } from "./Citizen";
+import { Citizen } from "../interfaces";
+import { CitizenDisplay } from "./CitizenDisplay";
 import { css } from "emotion";
+import { CitizenDetails } from "./CitizenDetails";
+import { A, pipe } from "../prelude.d";
 
-type ListData = {
-  filter: string;
+interface Props {
   inputs$: Subject<string>;
-  data: Array<CitizenData>;
-};
+  citizens: Array<Citizen>;
+}
 
-export const CitizenList: FC<ListData> = props => {
-  const inputs$ = props.inputs$;
-  const [citizenData, setCitizenData] = useState<Array<CitizenData>>(
-    props.data
-  );
-  const [filter, setFilter] = useState<string>(props.filter);
+export const CitizenList: FC<Props> = ({ inputs$, citizens }) => {
+  const [allCitizens] = useState<Array<Citizen>>(citizens);
+  const [filteredCitizens, setFilteredCitizens] = useState<Array<Citizen>>(citizens);
+  const [filter, setFilter] = useState<string>("");
   const [start, setStart] = useState<number>(0);
   const [scrolling, setScrolling] = useState<boolean>(false);
   const listRef = useRef<HTMLDivElement>(null);
@@ -23,73 +22,55 @@ export const CitizenList: FC<ListData> = props => {
   useEffect(() => {
     if (listRef.current && scrolling) {
       const refValue = listRef.current;
-      if (
-        refValue.scrollHeight + refValue.scrollTop ===
-        refValue.clientHeight
-      ) {
-        reachBottom();
+      if (refValue.scrollHeight + refValue.scrollTop === refValue.clientHeight) {
+        setScrolling(false);
+        if (start < filteredCitizens.length) {
+          setStart(start + 8);
+        }
         listRef.current.scrollTop = 20;
       } else if (refValue.scrollTop === 0) {
-        reachTop();
-        listRef.current.scrollTop =
-          refValue.clientHeight - refValue.scrollHeight - 20;
+        setScrolling(false);
+        if (start > 0) {
+          setStart(start - 8);
+        }
+        listRef.current.scrollTop = refValue.clientHeight - refValue.scrollHeight - 20;
       }
     }
-  }, []);
+  }, [scrolling]);
 
   useEffect(() => {
-    const subscription = inputs$.subscribe(f => setFilter(f));
-  }, []);
+    const s = inputs$.subscribe(f => setFilter(f));
+    return () => {
+      s.unsubscribe();
+    };
+  }, [filter]);
 
   useEffect(() => {
-    setCitizenData(
-      props.data.filter(citizen => {
-        const existsJob: Array<string> = citizen.professions.filter(job => {
-          return job.toLowerCase().includes(filter.toLowerCase());
-        });
-        return (
-          citizen.name.toLowerCase().includes(filter.toLowerCase()) ||
-          existsJob.length
-        );
-      })
+    setFilteredCitizens(
+      allCitizens.filter(
+        ({ professions, name }) =>
+          name.toLowerCase().includes(filter.toLowerCase()) ||
+          professions.filter(p => p.toLowerCase().includes(filter.toLowerCase())).length,
+      ),
     );
   }, [filter]);
 
-  function reachTop() {
-    setScrolling(false);
-    if (start > 0) {
-      setStart(start - 8);
-    }
-  }
-
-  function reachBottom() {
-    setScrolling(false);
-    if (start < citizenData.length) {
-      setStart(start + 8);
-    }
-  }
-
-  const listCitizens = citizenData
-    .slice(start, start + 15)
-    .map((citizen: any) => (
-      <Citizen
-        id={citizen.id}
-        name={citizen.name}
-        thumbnail={citizen.thumbnail}
-        professions={citizen.professions}
-        age={citizen.age}
-        height={citizen.height}
-        weight={citizen.weight}
-      />
-    ));
-
   return (
-    <div
-      className={styles.list}
-      ref={listRef}
-      onScroll={() => setScrolling(true)}
-    >
-      <ul>{listCitizens}</ul>
+    <div className={styles.list} ref={listRef} onScroll={() => setScrolling(true)}>
+      <ul>
+        {pipe(
+          filteredCitizens.slice(start, start + 15),
+          A.map(c => (
+            <CitizenDetails
+              key={c.name}
+              professions={c.professions}
+              age={c.age}
+              height={c.height}
+              weight={c.weight}
+            />
+          )),
+        )}
+      </ul>
     </div>
   );
 };
@@ -99,5 +80,5 @@ const styles = {
     height: 91%;
     width: 100%;
     overflow-y: scroll;
-  `
+  `,
 };

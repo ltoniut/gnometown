@@ -1,38 +1,42 @@
-import React, { FC, useEffect, useState } from "react";
+import { css } from "emotion";
+import React, { FC, useState } from "react";
+import useAsyncEffect from "use-async-effect";
 import "./App.css";
 import { Stage } from "./components/Stage";
-import { css } from "emotion";
-import { useAsyncEffect } from "use-async-effect";
+import { Citizen } from "./interfaces";
+import { A, O, pipe, R } from "./prelude.d";
 
-// TODO Review any
-const Sources: any = require("./sources.json");
+const assets = require("./sources.json");
+type TownData = Array<Citizen>;
 
 export const App: FC = () => {
-  const [fileName, setFileName] = useState<string>(Sources.town);
-  const [JSONData, setJSONData] = useState<any>();
+  const [fileName] = useState<string>(assets.town);
+  const [towns, setTowns] = useState<Record<string, TownData>>({});
 
-  useEffect(() => {Promise.resolve(async () => {
+  useAsyncEffect(async () => {
     await fetch(fileName as string)
       .then(res => res.json())
-      .then(res => setJSONData(res));
-      });
-    }, [fileName]);
+      .then(res => setTowns(res))
+      .then(res => console.log(res));
+  }, [fileName]);
 
-  async function fetchData() {
-    const parsedJson = await fetch(fileName as string)
-    .then(res => res.json())
-    .then(res => setJSONData(res))
-    .then(res => console.log(fileName as string))
-    .then(res => console.log(JSONData));
-  }
+  const townO = pipe(
+    towns,
+    R.toArray,
+    A.head,
+    O.map(([name, citizens]) => ({ name, citizens })),
+  );
 
-  useEffect(() => console.log(JSONData), [JSONData]);
-  return (
-    JSONData && (
-      <div className={styles.component}>
-        <Stage townData={JSONData} />
-      </div>
-    )
+  return pipe(
+    townO,
+    O.fold(
+      () => <div>Loading...</div>,
+      t => (
+        <div className={styles.component}>
+          <Stage town={t} />
+        </div>
+      ),
+    ),
   );
 };
 
@@ -42,5 +46,5 @@ const styles = {
     height: 90vh;
     text-align: center;
     margin-top: 0%;
-    `
-}
+  `,
+};

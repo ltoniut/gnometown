@@ -1,19 +1,18 @@
 import React, { FC, useState } from "react";
 import { Subject } from "rxjs";
-import { CitizenData } from "../interfaces";
+import { Citizen } from "../interfaces";
 import { CitizenList } from "./CitizenList";
-
 import { css } from "emotion";
-import { connect } from "http2";
 
 const Sources = require("../sources.json");
 
-export const CitizenManager: FC<Array<CitizenData>> = props => {
+interface Props {
+  citizens: Array<Citizen>;
+}
+
+export const CitizenManager: FC<Props> = ({ citizens }) => {
   const [display, setDisplay] = useState<boolean>(true);
-  const [filter] = useState<string>("");
-
   const [inputs$] = useState(() => new Subject());
-
 
   function hideComponent() {
     setDisplay(false);
@@ -23,10 +22,7 @@ export const CitizenManager: FC<Array<CitizenData>> = props => {
 
   return (
     <div className={styles.bar}>
-      <div
-        className={styles.arrow}
-        onClick={() => setDisplay(!display)}
-      >
+      <div className={styles.arrow} onClick={() => setDisplay(!display)}>
         <img src={rightArrow} />
       </div>
       {display && (
@@ -36,11 +32,7 @@ export const CitizenManager: FC<Array<CitizenData>> = props => {
             <br />
             <input type="text" onChange={e => inputs$.next(e.target.value)} />
           </div>
-          <CitizenList
-            data={props}
-            filter={filter}
-            inputs$={inputs$ as Subject<string>}
-          />
+          <CitizenList citizens={citizens} inputs$={inputs$ as Subject<string>} />
         </div>
       )}
     </div>
@@ -67,5 +59,5 @@ const styles = {
   filter: css`
     padding-top: 2%;
     height: 7%;
-  `
+  `,
 };

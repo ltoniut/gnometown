@@ -1,17 +1,13 @@
 import React, { useState, FC } from "react";
 
-interface Details {
+interface Props {
   age: number;
   weight: number;
   height: number;
   professions: Array<string>;
-};
+}
 
-export const CitizenDetails: FC<Details> = data => {
-  const [height] = useState<number>(data.height);
-  const [weight] = useState<number>(data.weight);
-  const [professions] = useState<Array<string>>(data.professions);
-
+export const CitizenDetails: FC<Props> = ({ height, weight, age, professions }) => {
   return (
     <div>
       <div>Height: {height}</div>

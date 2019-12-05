@@ -1,21 +1,19 @@
-import React, { useState } from "react";
-import { NameDisplay } from "./NameDisplay";
-import { CitizenManager } from "./CitizenManager";
-import { CitizenData } from "../interfaces";
 import { css } from "emotion";
+import React, { FC } from "react";
+import { Town } from "../interfaces";
+import { CitizenManager } from "./CitizenManager";
+import { NameDisplay } from "./NameDisplay";
 
-export const Stage = props => {
-  const nameData = Object.keys(props.townData)[0];
-  const citizenData: Array<CitizenData> =
-    props.townData[Object.keys(props.townData)[0]];
-  const [townName] = useState<string>(nameData);
-  const [townData] = useState<Array<CitizenData>>(citizenData);
+interface Props {
+  town: Town;
+}
 
-  return <div className={styles.component}>
-      <NameDisplay title={townName} />
-      <CitizenManager data={townData} />
-    </div>
-};
+export const Stage: FC<Props> = ({ town }) => (
+  <div className={styles.component}>
+    <NameDisplay title={town.name} />
+    <CitizenManager citizens={town.citizens} />
+  </div>
+);
 
 const styles = {
   component: css`
@@ -26,5 +24,5 @@ const styles = {
     background-size: 100% 100%;
     margin-left: auto;
     margin-right: auto;
-  `
+  `,
 };
