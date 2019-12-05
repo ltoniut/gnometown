@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import { Subject } from "rxjs";
 import { Citizen } from "../interfaces";
 import { CitizenList } from "./CitizenList";
@@ -8,16 +8,21 @@ const assets = require("../assets.json");
 
 interface Props {
   citizens: Array<Citizen>;
+  inheritedDisplay: boolean;
 }
 
-export const CitizenManager: FC<Props> = ({ citizens }) => {
-  const [display, setDisplay] = useState<boolean>(true);
+export const CitizenManager: FC<Props> = ({ citizens, inheritedDisplay }) => {
+  const [display, setDisplay] = useState<boolean>(inheritedDisplay);
   const [inputs$] = useState(() => new Subject());
 
   const rightArrow: string = assets.rightArrow;
   const leftArrow: string = assets.leftArrow;
 
   const [arrowDirection, setArrowDirection] = useState<string>(rightArrow);
+
+  useEffect(() => {
+    setDisplay(inheritedDisplay);
+  }, [inheritedDisplay]);
 
   const useSlider = () => {
     setDisplay(!display);
