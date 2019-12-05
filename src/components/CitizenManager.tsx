@@ -47,7 +47,7 @@ const styles = {
   bar: css`
     float: right;
     height: 100%;
-    background-color: #9c5151;
+    background-image: url("http://2.bp.blogspot.com/-HPWq5_H10Bs/U4NbaH3_WoI/AAAAAAAAO-w/3tOklJ2MBcE/s1600/Seamless_Natural_Wood_Texture.jpg");
   `,
   manager: css`
     float: right;
@@ -56,7 +56,7 @@ const styles = {
     width: 27vh;
   `,
   arrow: css`
-    background-image: url("http://2.bp.blogspot.com/-HPWq5_H10Bs/U4NbaH3_WoI/AAAAAAAAO-w/3tOklJ2MBcE/s1600/Seamless_Natural_Wood_Texture.jpg");
+    background-color: #a5412a;
     float: left;
     width: 3.5vh;
     height: 100%;
