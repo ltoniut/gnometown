@@ -1,5 +1,5 @@
-import React, { useState, FC } from "react";
 import { css } from "emotion";
+import React, { FC } from "react";
 
 interface Props {
   age: number;
@@ -30,9 +30,10 @@ const styles = {
     margin: 5%;
     padding: 3%;
     text-align: left;
+    box-shadow: 3px 3px #847734;
     border: 1px;
     border-color: black;
     border-style: solid;
-    background-color: yellow;
+    background-color: #eeee17;
   `,
 };

@@ -2,7 +2,7 @@ import { css } from "emotion";
 import React, { FC } from "react";
 import { Town } from "../interfaces";
 import { CitizenManager } from "./CitizenManager";
-import NameDisplay from "./NameDisplay";
+import { NameDisplay } from "./NameDisplay";
 
 interface Props {
   town: Town;

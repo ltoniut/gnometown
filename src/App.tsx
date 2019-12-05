@@ -6,7 +6,7 @@ import { Stage } from "./components/Stage";
 import { Citizen } from "./interfaces";
 import { A, O, pipe, R } from "./prelude.d";
 
-const assets = require("./sources.json");
+const assets = require("./assets.json");
 type TownData = Array<Citizen>;
 
 export const App: FC = () => {
