@@ -1,14 +1,11 @@
 import { css } from "emotion";
 import React, { FC, useState } from "react";
-import { Citizen } from "../interfaces";
+import { Citizen } from "../domain";
 import { CitizenDetails } from "./CitizenDetails";
 
 interface Props extends Citizen {}
 
 export const CitizenDisplay: FC<Props> = ({ name, thumbnail, ...props }) => {
-  // REVIEW No need for state, you have props already.
-  // const [name] = useState<string>(data.name);
-  // const [image] = useState<string>(data.thumbnail);
   const [display, setDisplay] = useState<boolean>(false);
 
   return (

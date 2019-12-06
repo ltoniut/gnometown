@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from "react";
 import { Subject } from "rxjs";
-import { Citizen } from "../interfaces";
+import { Citizen } from "../domain";
 import { CitizenList } from "./CitizenList";
 import { css } from "emotion";
 
@@ -22,11 +22,12 @@ export const CitizenManager: FC<Props> = ({ citizens, inheritedDisplay }) => {
 
   useEffect(() => {
     setDisplay(inheritedDisplay);
+    setArrowDirection(inheritedDisplay ? rightArrow : leftArrow);
   }, [inheritedDisplay]);
 
   const useSlider = () => {
     setDisplay(!display);
-    setArrowDirection(arrowDirection == leftArrow ? rightArrow : leftArrow);
+    setArrowDirection(display ? leftArrow : rightArrow);
   };
 
   return (
@@ -37,9 +38,8 @@ export const CitizenManager: FC<Props> = ({ citizens, inheritedDisplay }) => {
       {display && (
         <div className={styles.manager}>
           <div className={styles.filterContainer}>
-            Filter Citizens:
-            <br />
             <input
+              placeholder="Filter Citizens"
               className={styles.filterInput}
               type="text"
               onChange={e => inputs$.next(e.target.value)}
@@ -56,29 +56,28 @@ const styles = {
   bar: css`
     float: right;
     height: 100%;
-    background-image: url("/assets/manager-background.jpg");
+    background-color: #795548;
   `,
   manager: css`
     float: right;
-    margin-right: 3vh;
     height: 100%;
     width: 27vh;
   `,
   arrow: css`
     margin: auto;
-    vertical-align: center;
-    max-height: 3vh;
+    max-height: 2.2rem;
   `,
   slider: css`
     background-color: #a5412a;
     float: left;
+    display: flex;
     vertical-align: center;
     width: 4.5vh;
     height: 100%;
   `,
   filterContainer: css`
     padding: 4%;
-    height: 7%;
+    height: 5%;
   `,
   filterInput: css`
     margin-top: 4%;

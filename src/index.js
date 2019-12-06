@@ -4,5 +4,7 @@ import "./index.css";
 import { App } from "./App.tsx";
 import registerServiceWorker from "./registerServiceWorker";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+const assets = require("./assets.json");
+
+ReactDOM.render(<App file={assets.town} />, document.getElementById("root"));
 registerServiceWorker();

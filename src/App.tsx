@@ -1,10 +1,12 @@
 import { css } from "emotion";
 import React, { FC, useState } from "react";
 import useAsyncEffect from "use-async-effect";
-import "./App.css";
 import { Stage } from "./components/Stage";
-import { Citizen } from "./interfaces";
-import { A, O, pipe, R } from "./prelude.d";
+import { Citizen } from "./domain";
+import * as R from "fp-ts/lib/Record";
+import * as A from "fp-ts/lib/Array";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/pipeable";
 
 const assets = require("./assets.json");
 type TownData = Array<Citizen>;

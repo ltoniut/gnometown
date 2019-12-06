@@ -6,6 +6,7 @@ export interface Citizen {
   height: number;
   thumbnail: string;
   professions: Array<string>;
+  hair_color: string;
 }
 
 export interface Town {

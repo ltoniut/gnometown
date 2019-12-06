@@ -1,13 +1,12 @@
 import { css } from "emotion";
 import React, { FC, useState, useEffect } from "react";
-import { connect, ConnectedProps } from "react-redux";
 
 type Props = {
   title: string;
 };
 
 export const NameDisplay: FC<Props> = ({ title }) => {
-  const [display, setDisplay] = useState<boolean>(false);
+  const [display, setDisplay] = useState<boolean>(true);
 
   useEffect(() => {
     const t = setTimeout(() => setDisplay(false), 7000); // Hide town name after 7 seconds

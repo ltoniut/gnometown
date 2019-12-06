@@ -1,11 +1,10 @@
+import { css } from "emotion";
 import React, { FC, useEffect, useRef, useState } from "react";
 import { Subject } from "rxjs";
-import { Citizen } from "../interfaces";
+import { Citizen } from "../domain";
+import * as A from "fp-ts/lib/Array";
+import { pipe } from "fp-ts/lib/pipeable";
 import { CitizenDisplay } from "./CitizenDisplay";
-import { css } from "emotion";
-import { CitizenDetails } from "./CitizenDetails";
-import { A, pipe } from "../prelude.d";
-import { traverse } from "fp-ts/lib/Record";
 
 const assets = require("../assets.json");
 
@@ -81,6 +80,7 @@ export const CitizenList: FC<Props> = ({ inputs$, citizens }) => {
               age={c.age}
               height={c.height}
               weight={c.weight}
+              hair_color={c.hair_color}
             />
           )),
         )}
@@ -100,8 +100,8 @@ const styles = {
     overflow-y: scroll;
   `,
   citizens: css`
-    padding-right: 3vh;
-    padding-top: 3vh;
+    padding-right: 1.7rem;
+    padding-top: 1.7rem;
   `,
   directionalButton: css`
     width: 100%;
@@ -113,6 +113,6 @@ const styles = {
   arrow: css`
     margin: auto;
     vertical-align: center;
-    max-width: 3vh;
+    max-width: 2.2rem;
   `,
 };
