@@ -21,6 +21,9 @@ const hoverReducer = (state: boolean, action: Action) => {
 };
 
 export const Stage: FC<Props> = ({ town }) => {
+  if (!town.name) {
+    throw new Error("Town must have a name");
+  }
   const [hover, dispatch] = useReducer<(state: boolean, action: Action) => boolean>(
     hoverReducer,
     true,
