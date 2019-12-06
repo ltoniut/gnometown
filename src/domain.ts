@@ -4,9 +4,10 @@ export interface Citizen {
   age: number;
   weight: number;
   height: number;
+  hair_color: string;
   thumbnail: string;
   professions: Array<string>;
-  hair_color: string;
+  friends: Array<string>;
 }
 
 export interface Town {

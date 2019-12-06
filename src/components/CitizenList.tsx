@@ -81,6 +81,7 @@ export const CitizenList: FC<Props> = ({ inputs$, citizens }) => {
               height={c.height}
               weight={c.weight}
               hair_color={c.hair_color}
+              friends={c.friends}
             />
           )),
         )}

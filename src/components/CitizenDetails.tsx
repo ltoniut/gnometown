@@ -8,9 +8,17 @@ interface Props {
   height: number;
   professions: Array<string>;
   hair_color: string;
+  friends: Array<string>;
 }
 
-export const CitizenDetails: FC<Props> = ({ height, weight, hair_color, age, professions }) => (
+export const CitizenDetails: FC<Props> = ({
+  height,
+  weight,
+  hair_color,
+  age,
+  professions,
+  friends,
+}) => (
   <div className={styles.component}>
     <div>Age: {age}</div>
     <div>Height: {height}</div>
@@ -21,6 +29,14 @@ export const CitizenDetails: FC<Props> = ({ height, weight, hair_color, age, pro
       <ul>
         {professions.map((profession: string) => (
           <li key={profession}>{profession}</li>
+        ))}
+      </ul>
+    </div>
+    <div>
+      Friends:
+      <ul>
+        {friends.map((friend: string) => (
+          <li key={friend}>{friend}</li>
         ))}
       </ul>
     </div>

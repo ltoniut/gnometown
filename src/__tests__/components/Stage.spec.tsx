@@ -15,6 +15,7 @@ describe("Correct Town", () => {
       height: 107.75835,
       hair_color: "Pink",
       professions: ["Metalworker", "Woodcarver", "Stonecarver", " Tinker", "Tailor", "Potter"],
+      friends: ["Cogwitz Chillwidget", "Tinadette Chillbuster"],
     };
     const citizen2: Citizen = {
       id: 1,
@@ -25,6 +26,7 @@ describe("Correct Town", () => {
       height: 110.43628,
       hair_color: "Green",
       professions: ["Brewer", "Medic", "Prospector", "Gemcutter", "Mason", "Tailor"],
+      friends: [],
     };
     const town: Town = { name: "populatedTown", citizens: [citizen1, citizen2] };
     const div = document.createElement("div");
@@ -45,6 +47,7 @@ describe("Nameless Town", () => {
       height: 107.75835,
       hair_color: "Pink",
       professions: ["Metalworker", "Woodcarver", "Stonecarver", " Tinker", "Tailor", "Potter"],
+      friends: ["Cogwitz Chillwidget", "Tinadette Chillbuster"],
     };
     const citizen2: Citizen = {
       id: 1,
@@ -55,6 +58,7 @@ describe("Nameless Town", () => {
       height: 110.43628,
       hair_color: "Green",
       professions: ["Brewer", "Medic", "Prospector", "Gemcutter", "Mason", "Tailor"],
+      friends: [],
     };
     const town: Town = { name: "", citizens: [citizen1, citizen2] };
     const div = document.createElement("div");
