@@ -1,9 +1,9 @@
 import { css } from "emotion";
 import React, { FC, useState, useEffect } from "react";
 
-type Props = {
+interface Props {
   title: string;
-};
+}
 
 export const NameDisplay: FC<Props> = ({ title }) => {
   const [display, setDisplay] = useState<boolean>(true);

@@ -8,6 +8,8 @@ import { CitizenDisplay } from "./CitizenDisplay";
 
 const assets = require("../assets.json");
 
+type Direction = "up" | "down";
+
 interface Props {
   inputs$: Subject<string>;
   citizens: Array<Citizen>;
@@ -27,29 +29,22 @@ export const CitizenList: FC<Props> = ({ inputs$, citizens }) => {
   const quantityDisplayed = 15;
   const scrollDistance = 5;
 
-  const traverse = (direction: string) => {
-    switch (direction) {
+  const traverse = (d: Direction) => {
+    switch (d) {
       case "down":
-        console.log("traversing down");
         start + quantityDisplayed < filteredCitizens.length
-          ? setStart(start + 8)
-          : console.log("Reached bottom");
+          ? setStart(start + scrollDistance)
+          : void 0;
         break;
       case "up":
-        start > 0 ? setStart(start - 8) : console.log("Reached top");
+        start > 0 ? setStart(start - scrollDistance) : void 0;
         break;
-      default: {
-        console.log("Do nothing");
-        break;
-      }
     }
   };
 
   useEffect(() => {
     const s = inputs$.subscribe(f => setFilter(f));
-    return () => {
-      s.unsubscribe();
-    };
+    return () => s.unsubscribe();
   }, [filter]);
 
   useEffect(() => {

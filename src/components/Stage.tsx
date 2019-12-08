@@ -8,7 +8,6 @@ import { NameDisplay } from "./NameDisplay";
 interface Props {
   town: Town;
 }
-
 const hoverReducer = (state: boolean, action: Action) => {
   switch (action.type) {
     case "SHOW_MANAGER":
@@ -45,8 +44,6 @@ export const Stage: FC<Props> = ({ town }) => {
     </div>
   );
 };
-
-// Reducer
 
 const styles = {
   component: css`

@@ -31,7 +31,7 @@ export const CitizenManager: FC<Props> = ({ citizens, inheritedDisplay }) => {
   };
 
   return (
-    <div className={styles.bar}>
+    <div className={styles.component}>
       <div className={styles.slider} onClick={useSlider}>
         <img className={styles.arrow} src={arrowDirection} />
       </div>
@@ -53,7 +53,7 @@ export const CitizenManager: FC<Props> = ({ citizens, inheritedDisplay }) => {
 };
 
 const styles = {
-  bar: css`
+  component: css`
     float: right;
     height: 100%;
     background-color: #795548;

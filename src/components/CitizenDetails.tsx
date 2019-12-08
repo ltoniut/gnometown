@@ -27,16 +27,16 @@ export const CitizenDetails: FC<Props> = ({
     <div>
       Jobs:
       <ul>
-        {professions.map((profession: string) => (
-          <li key={profession}>{profession}</li>
+        {professions.map(p => (
+          <li key={p}>{p}</li>
         ))}
       </ul>
     </div>
     <div>
       Friends:
       <ul>
-        {friends.map((friend: string) => (
-          <li key={friend}>{friend}</li>
+        {friends.map(f => (
+          <li key={f}>{f}</li>
         ))}
       </ul>
     </div>
