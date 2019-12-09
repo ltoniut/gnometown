@@ -1,46 +1,64 @@
 import { css } from "emotion";
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState, useReducer } from "react";
 import { Subject } from "rxjs";
 import { Citizen } from "../domain";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/pipeable";
 import { CitizenDisplay } from "./CitizenDisplay";
+import { Action } from "redux";
 
 const assets = require("../assets.json");
 
-type Direction = "up" | "down";
+const upArrow: string = assets.upArrow;
+const downArrow: string = assets.downArrow;
 
 interface Props {
   inputs$: Subject<string>;
   citizens: Array<Citizen>;
 }
 
-const upArrow: string = assets.upArrow;
-const downArrow: string = assets.downArrow;
+const quantityDisplayed = 15;
+const scrollDistance = 5;
+
+const scrollerReducer = (state: number, action: Action) => {
+  switch (action.type) {
+    case "DESCEND":
+      console.log(state);
+      return state + scrollDistance;
+    case "ASCEND":
+      return state - scrollDistance;
+    default:
+      throw new Error();
+  }
+};
 
 export const CitizenList: FC<Props> = ({ inputs$, citizens }) => {
   const [allCitizens] = useState<Array<Citizen>>(citizens);
   const [filteredCitizens, setFilteredCitizens] = useState<Array<Citizen>>(citizens);
   const [filter, setFilter] = useState<string>("");
-  const [start, setStart] = useState<number>(0);
-  const [scrolling, setScrolling] = useState<boolean>(false);
   const listRef = useRef<HTMLDivElement>(null);
 
-  const quantityDisplayed = 15;
-  const scrollDistance = 5;
+  const [start, dispatch] = useReducer<(state: number, action: Action) => number>(
+    scrollerReducer,
+    0,
+  );
 
-  const traverse = (d: Direction) => {
-    switch (d) {
-      case "down":
-        start + quantityDisplayed < filteredCitizens.length
-          ? setStart(start + scrollDistance)
-          : void 0;
-        break;
-      case "up":
-        start > 0 ? setStart(start - scrollDistance) : void 0;
-        break;
-    }
+  const handleDownArrow = () => {
+    dispatch({ type: "DESCEND" });
   };
+  const handleUpArrow = () => {
+    dispatch({ type: "ASCEND" });
+  };
+
+  useEffect(() => {
+    console.log(start);
+    if (start < 0) {
+      handleUpArrow();
+    }
+    if (start >= filteredCitizens.length) {
+      handleDownArrow();
+    }
+  }, [start]);
 
   useEffect(() => {
     const s = inputs$.subscribe(f => setFilter(f));
@@ -58,8 +76,8 @@ export const CitizenList: FC<Props> = ({ inputs$, citizens }) => {
   }, [filter]);
 
   return (
-    <div className={styles.list} ref={listRef} onScroll={() => setScrolling(true)}>
-      <div className={styles.directionalButton} onClick={() => traverse("up")}>
+    <div className={styles.list} ref={listRef}>
+      <div className={styles.directionalButton} onClick={handleUpArrow}>
         <img className={styles.arrow} src={upArrow}></img>
       </div>
       <ul className={styles.citizens}>
@@ -81,7 +99,7 @@ export const CitizenList: FC<Props> = ({ inputs$, citizens }) => {
           )),
         )}
       </ul>
-      <div className={styles.directionalButton} onClick={() => traverse("down")}>
+      <div className={styles.directionalButton} onClick={handleDownArrow}>
         <img className={styles.arrow} src={downArrow}></img>
       </div>
     </div>
