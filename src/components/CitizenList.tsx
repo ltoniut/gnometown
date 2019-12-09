@@ -23,7 +23,6 @@ const scrollDistance = 5;
 const scrollerReducer = (state: number, action: Action) => {
   switch (action.type) {
     case "DESCEND":
-      console.log(state);
       return state + scrollDistance;
     case "ASCEND":
       return state - scrollDistance;
@@ -51,7 +50,6 @@ export const CitizenList: FC<Props> = ({ inputs$, citizens }) => {
   };
 
   useEffect(() => {
-    console.log(start);
     if (start < 0) {
       handleUpArrow();
     }

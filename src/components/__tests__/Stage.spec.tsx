@@ -1,4 +1,4 @@
-import { Stage } from "../../components/Stage";
+import { Stage } from "../Stage";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Town, Citizen } from "../../domain";
