@@ -26,16 +26,14 @@ export const NameDisplay: FC<Props> = ({ title }) => {
 };
 
 const styles = {
-  "@font-face": {
-    fontFamily: "introrustg",
-    src: "/assets/introrustg-base2line.otf",
-  },
   component: css`
     margin-top: 8vh;
     text-align: center;
     position: absolute;
     font-size: 7vh;
-    font-family: "introrustg";
+    font-family: cursive;
     width: 80%;
+    background-color: #222;
+    color: white;
   `,
 };

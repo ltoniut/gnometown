@@ -1,16 +1,13 @@
 import { css } from "emotion";
-import React, { FC, useEffect, useRef, useState, useReducer } from "react";
+import React, { FC, useEffect, useState, useReducer } from "react";
 import { Subject } from "rxjs";
 import { Citizen } from "../domain";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/pipeable";
 import { CitizenDisplay } from "./CitizenDisplay";
 import { Action } from "redux";
-
-const assets = require("../assets.json");
-
-const upArrow: string = assets.upArrow;
-const downArrow: string = assets.downArrow;
+import ExpandLessIcon from "@material-ui/icons/ExpandLess";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 interface Props {
   inputs$: Subject<string>;
@@ -35,7 +32,6 @@ export const CitizenList: FC<Props> = ({ inputs$, citizens }) => {
   const [allCitizens] = useState<Array<Citizen>>(citizens);
   const [filteredCitizens, setFilteredCitizens] = useState<Array<Citizen>>(citizens);
   const [filter, setFilter] = useState<string>("");
-  const listRef = useRef<HTMLDivElement>(null);
 
   const [start, dispatch] = useReducer<(state: number, action: Action) => number>(
     scrollerReducer,
@@ -46,7 +42,11 @@ export const CitizenList: FC<Props> = ({ inputs$, citizens }) => {
     dispatch({ type: "DESCEND" });
   };
   const handleUpArrow = () => {
-    dispatch({ type: "ASCEND" });
+    if (start > 0) {
+      dispatch({ type: "ASCEND" });
+    } else {
+      alert("Top of list");
+    }
   };
 
   useEffect(() => {
@@ -74,14 +74,14 @@ export const CitizenList: FC<Props> = ({ inputs$, citizens }) => {
   }, [filter]);
 
   return (
-    <div className={styles.list} ref={listRef}>
+    <div className={styles.list}>
       <div className={styles.directionalButton} onClick={handleUpArrow}>
-        <img className={styles.arrow} src={upArrow}></img>
+        <ExpandLessIcon className={styles.arrow} fontSize="large" />
       </div>
       <ul className={styles.citizens}>
         {pipe(
           filteredCitizens.slice(start, start + quantityDisplayed),
-          A.map(c => (
+          A.map((c: any) => (
             <CitizenDisplay
               key={c.id}
               id={c.id}
@@ -98,7 +98,7 @@ export const CitizenList: FC<Props> = ({ inputs$, citizens }) => {
         )}
       </ul>
       <div className={styles.directionalButton} onClick={handleDownArrow}>
-        <img className={styles.arrow} src={downArrow}></img>
+        <ExpandMoreIcon className={styles.arrow} fontSize="large" />
       </div>
     </div>
   );
@@ -106,25 +106,26 @@ export const CitizenList: FC<Props> = ({ inputs$, citizens }) => {
 
 const styles = {
   list: css`
-    height: 91%;
+    height: 100%;
     width: 100%;
-    float: left;
     overflow-y: scroll;
   `,
   citizens: css`
+    padding-top: 0;
+    margin: 0;
     padding-right: 1.7rem;
     padding-top: 1.7rem;
   `,
   directionalButton: css`
     width: 100%;
-    float: right;
     background-color: gold;
-    padding: 2%;
-    background-color: rgba(200, 180, 100, 5);
+    background-color: #222;
+    float: left;
   `,
   arrow: css`
     margin: auto;
     vertical-align: center;
     max-width: 2.2rem;
+    color: white;
   `,
 };

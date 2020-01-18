@@ -11,12 +11,11 @@ export const CitizenDisplay: FC<Props> = ({ name, thumbnail, ...props }) => {
   return (
     <div
       className={styles.component}
-      onClick={() => {
-        return setDisplay(!display);
-      }}
     >
-      <img className={styles.thumbnail} src={thumbnail}></img>
-      <div>{name}</div>
+      <div onClick={() => setDisplay(!display)}>
+        <img className={styles.thumbnail} src={thumbnail}></img>
+        <div className={styles.name}>{name}</div>
+      </div>
       {display && <CitizenDetails {...props} />}
     </div>
   );
@@ -24,18 +23,23 @@ export const CitizenDisplay: FC<Props> = ({ name, thumbnail, ...props }) => {
 
 const styles = {
   component: css`
-    padding-bottom: 3%;
-    padding-top: 3%;
+    background-color: #222;
+    color: white;
     text-align: center;
-    border: 2px;
-    border-color: #9a861a;
-    border-style: solid;
     border-radius: 10px;
-    margin-left: 2%;
-    margin-right: 2%;
+    overflow: hidden;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 5px;
+    box-shadow: 5px 7px 24px -7px rgba(0,0,0,0.34);
   `,
   thumbnail: css`
-    max-height: 100px;
-    max-width: 150px;
+    height: 120px;
+    width: 100%;
+    object-fit: cover;
+  `,
+  name: css`
+    padding-left: 15px;
+    padding-right: 15px;
   `,
 };

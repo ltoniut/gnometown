@@ -1,10 +1,12 @@
 import React, { FC, useState, useEffect } from "react";
 import { Subject } from "rxjs";
+import { css } from "emotion";
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import { SvgIconProps } from '@material-ui/core/SvgIcon';
+
 import { Citizen } from "../domain";
 import { CitizenList } from "./CitizenList";
-import { css } from "emotion";
-
-const assets = require("../assets.json");
 
 interface Props {
   citizens: Array<Citizen>;
@@ -15,25 +17,22 @@ export const CitizenManager: FC<Props> = ({ citizens, inheritedDisplay }) => {
   const [display, setDisplay] = useState<boolean>(inheritedDisplay);
   const [inputs$] = useState(() => new Subject());
 
-  const rightArrow: string = assets.rightArrow;
-  const leftArrow: string = assets.leftArrow;
-
-  const [arrowDirection, setArrowDirection] = useState<string>(rightArrow);
+  const [ArrowDirection, setArrowDirection] = useState<FC<SvgIconProps>>(ChevronRightIcon);
 
   useEffect(() => {
     setDisplay(inheritedDisplay);
-    setArrowDirection(inheritedDisplay ? rightArrow : leftArrow);
+    setArrowDirection(inheritedDisplay ? ChevronRightIcon : ChevronLeftIcon);
   }, [inheritedDisplay]);
 
   const useSlider = () => {
     setDisplay(!display);
-    setArrowDirection(display ? leftArrow : rightArrow);
+    setArrowDirection(display ? ChevronLeftIcon : ChevronRightIcon);
   };
 
   return (
     <div className={styles.component}>
       <div className={styles.slider} onClick={useSlider}>
-        <img className={styles.arrow} src={arrowDirection} />
+        <ArrowDirection fontSize="large" className={styles.arrow} />
       </div>
       {display && (
         <div className={styles.manager}>
@@ -56,30 +55,40 @@ const styles = {
   component: css`
     float: right;
     height: 100%;
+    display: flex;
     background-color: #795548;
+    position: relative;
+    box-shadow: -7px 0 24px -7px rgba(0,0,0,0.34);
   `,
   manager: css`
-    float: right;
     height: 100%;
-    width: 27vh;
-  `,
-  arrow: css`
-    margin: auto;
-    max-height: 2.2rem;
+    width: 15rem;
+    display: flex;
+    flex-direction: column;
   `,
   slider: css`
-    background-color: #a5412a;
-    float: left;
     display: flex;
+    position: absolute;
+    top: calc(50% - 1rem);
+    left: calc(-2.2rem - 10px);
     vertical-align: center;
-    width: 4.5vh;
-    height: 100%;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 2.2rem;
+    background-color: #222;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 5px 7px 24px -7px rgba(0,0,0,0.34);
   `,
   filterContainer: css`
     padding: 4%;
     height: 5%;
   `,
   filterInput: css`
+    font-size: 1rem;
     margin-top: 4%;
+  `,
+  arrow: css`
+    color: white;
   `,
 };

@@ -1,6 +1,5 @@
 import { css } from "emotion";
 import React, { FC } from "react";
-import { string } from "prop-types";
 
 interface Props {
   age: number;
@@ -20,23 +19,23 @@ export const CitizenDetails: FC<Props> = ({
   friends,
 }) => (
   <div className={styles.component}>
-    <div>Age: {age}</div>
-    <div>Height: {height}</div>
-    <div>Weight: {weight}</div>
-    <div>Hair color: {hair_color}</div>
-    <div>
-      Jobs:
+    <div className={styles.line}>Age: {age}</div>
+    <div className={styles.line}>Height: {parseFloat(`${height}`).toFixed(2)} cm</div>
+    <div className={styles.line}>Weight: {parseFloat(`${weight}`).toFixed(2)} kg</div>
+    <div className={styles.line} style={{ color: hair_color }}>Hair color: {hair_color}</div>
+    <div className={styles.line}>
+      <div className={styles.line}>Jobs:</div>
       <ul>
         {professions.map(p => (
-          <li key={p}>{p}</li>
+          <li className={styles.line} key={p}>{p}</li>
         ))}
       </ul>
     </div>
-    <div>
-      Friends:
+    <div className={styles.line}>
+    <div className={styles.line}>Friends:</div>
       <ul>
         {friends.map(f => (
-          <li key={f}>{f}</li>
+          <li className={styles.line} key={f}>{f}</li>
         ))}
       </ul>
     </div>
@@ -48,10 +47,8 @@ const styles = {
     margin: 5%;
     padding: 3%;
     text-align: left;
-    box-shadow: 3px 3px #847734;
-    border: 1px;
-    border-color: black;
-    border-style: solid;
-    background-color: #eeee17;
+  `,
+  line: css`
+    margin-bottom: 3px;
   `,
 };
