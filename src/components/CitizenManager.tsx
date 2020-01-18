@@ -1,12 +1,12 @@
-import React, { FC, useState, useEffect } from "react";
-import { Subject } from "rxjs";
-import { css } from "emotion";
+import React, { FC, useState, useEffect } from 'react';
+import { Subject } from 'rxjs';
+import { css } from 'emotion';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { SvgIconProps } from '@material-ui/core/SvgIcon';
 
-import { Citizen } from "../domain";
-import { CitizenList } from "./CitizenList";
+import { Citizen } from '../domain';
+import { CitizenList } from './CitizenList';
 
 interface Props {
   citizens: Array<Citizen>;
@@ -32,15 +32,15 @@ export const CitizenManager: FC<Props> = ({ citizens, inheritedDisplay }) => {
   return (
     <div className={styles.component}>
       <div className={styles.slider} onClick={useSlider}>
-        <ArrowDirection fontSize="large" className={styles.arrow} />
+        <ArrowDirection fontSize='large' className={styles.arrow} />
       </div>
       {display && (
         <div className={styles.manager}>
           <div className={styles.filterContainer}>
             <input
-              placeholder="Filter Citizens"
+              placeholder='Filter Citizens'
               className={styles.filterInput}
-              type="text"
+              type='text'
               onChange={e => inputs$.next(e.target.value)}
             />
           </div>

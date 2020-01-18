@@ -1,13 +1,13 @@
-import { css } from "emotion";
-import React, { FC, useEffect, useState, useReducer } from "react";
-import { Subject } from "rxjs";
-import { Citizen } from "../domain";
-import * as A from "fp-ts/lib/Array";
-import { pipe } from "fp-ts/lib/pipeable";
-import { CitizenDisplay } from "./CitizenDisplay";
-import { Action } from "redux";
-import ExpandLessIcon from "@material-ui/icons/ExpandLess";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { css } from 'emotion';
+import React, { FC, useEffect, useState, useReducer } from 'react';
+import { Subject } from 'rxjs';
+import { Citizen } from '../domain';
+import * as A from 'fp-ts/lib/Array';
+import { pipe } from 'fp-ts/lib/pipeable';
+import { CitizenDisplay } from './CitizenDisplay';
+import { Action } from 'redux';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 interface Props {
   inputs$: Subject<string>;
@@ -19,9 +19,9 @@ const scrollDistance = 5;
 
 const scrollerReducer = (state: number, action: Action) => {
   switch (action.type) {
-    case "DESCEND":
+    case 'DESCEND':
       return state + scrollDistance;
-    case "ASCEND":
+    case 'ASCEND':
       return state - scrollDistance;
     default:
       throw new Error();
@@ -31,7 +31,7 @@ const scrollerReducer = (state: number, action: Action) => {
 export const CitizenList: FC<Props> = ({ inputs$, citizens }) => {
   const [allCitizens] = useState<Array<Citizen>>(citizens);
   const [filteredCitizens, setFilteredCitizens] = useState<Array<Citizen>>(citizens);
-  const [filter, setFilter] = useState<string>("");
+  const [filter, setFilter] = useState<string>('');
 
   const [start, dispatch] = useReducer<(state: number, action: Action) => number>(
     scrollerReducer,
@@ -39,13 +39,13 @@ export const CitizenList: FC<Props> = ({ inputs$, citizens }) => {
   );
 
   const handleDownArrow = () => {
-    dispatch({ type: "DESCEND" });
+    dispatch({ type: 'DESCEND' });
   };
   const handleUpArrow = () => {
     if (start > 0) {
-      dispatch({ type: "ASCEND" });
+      dispatch({ type: 'ASCEND' });
     } else {
-      alert("Top of list");
+      alert('Top of list');
     }
   };
 
@@ -76,7 +76,7 @@ export const CitizenList: FC<Props> = ({ inputs$, citizens }) => {
   return (
     <div className={styles.list}>
       <div className={styles.directionalButton} onClick={handleUpArrow}>
-        <ExpandLessIcon className={styles.arrow} fontSize="large" />
+        <ExpandLessIcon className={styles.arrow} fontSize='large' />
       </div>
       <ul className={styles.citizens}>
         {pipe(
@@ -98,7 +98,7 @@ export const CitizenList: FC<Props> = ({ inputs$, citizens }) => {
         )}
       </ul>
       <div className={styles.directionalButton} onClick={handleDownArrow}>
-        <ExpandMoreIcon className={styles.arrow} fontSize="large" />
+        <ExpandMoreIcon className={styles.arrow} fontSize='large' />
       </div>
     </div>
   );

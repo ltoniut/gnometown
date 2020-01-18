@@ -1,10 +1,10 @@
-import { css } from "emotion";
-import React, { FC, useState } from "react";
-import useAsyncEffect from "use-async-effect";
-import { Stage } from "./components/Stage";
-import { Citizen, Town } from "./domain";
+import { css } from 'emotion';
+import React, { FC, useState } from 'react';
+import useAsyncEffect from 'use-async-effect';
+import { Stage } from './components/Stage';
+import { Citizen, Town } from './domain';
 
-const assets = require("./assets.json");
+const assets = require('./assets.json');
 type TownData = Array<Citizen>;
 
 export const App: FC = () => {

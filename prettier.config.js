@@ -1,25 +1,25 @@
 module.exports = {
   overrides: [
     {
-      files: "*.js",
+      files: '*.js',
       options: {
-        parser: "babel",
+        parser: 'babel',
       },
     },
     {
-      files: "*.json",
+      files: '*.json',
       options: {
-        parser: "json",
+        parser: 'json',
       },
     },
     {
-      files: "*.ts",
+      files: '*.ts',
       options: {
-        parser: "typescript",
+        parser: 'typescript',
       },
     },
   ],
   printWidth: 100,
   tabWidth: 2,
-  trailingComma: "all",
+  trailingComma: 'all',
 };

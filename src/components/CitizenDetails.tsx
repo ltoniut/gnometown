@@ -1,5 +1,5 @@
-import { css } from "emotion";
-import React, { FC } from "react";
+import { css } from 'emotion';
+import React, { FC } from 'react';
 
 interface Props {
   age: number;

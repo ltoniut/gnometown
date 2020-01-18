@@ -1,13 +1,13 @@
-import * as B from "fp-ts/lib/BooleanAlgebra";
-import * as E from "fp-ts/lib/Either";
-import { constant, Lazy } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as T from "fp-ts/lib/Task";
-import { Task } from "fp-ts/lib/Task";
-import * as TE from "fp-ts/lib/TaskEither";
-import { TaskEither } from "fp-ts/lib/TaskEither";
+import * as B from 'fp-ts/lib/BooleanAlgebra';
+import * as E from 'fp-ts/lib/Either';
+import { constant, Lazy } from 'fp-ts/lib/function';
+import * as O from 'fp-ts/lib/Option';
+import * as T from 'fp-ts/lib/Task';
+import { Task } from 'fp-ts/lib/Task';
+import * as TE from 'fp-ts/lib/TaskEither';
+import { TaskEither } from 'fp-ts/lib/TaskEither';
 
-export const constEmptyString: Lazy<string> = () => "";
+export const constEmptyString: Lazy<string> = () => '';
 export const constNone = constant(O.none);
 
 export const foldToPromise = <X, Y>(t: TaskEither<X, Y>): Promise<Y> =>

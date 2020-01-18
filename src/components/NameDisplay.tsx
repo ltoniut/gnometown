@@ -1,5 +1,5 @@
-import { css } from "emotion";
-import React, { FC, useState, useEffect } from "react";
+import { css } from 'emotion';
+import React, { FC, useState, useEffect } from 'react';
 
 interface Props {
   title: string;

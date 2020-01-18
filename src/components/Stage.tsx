@@ -1,15 +1,15 @@
-import { css } from "emotion";
-import React, { FC } from "react";
-import { Town } from "../domain";
-import { CitizenManager } from "./CitizenManager";
-import { NameDisplay } from "./NameDisplay";
+import { css } from 'emotion';
+import React, { FC } from 'react';
+import { Town } from '../domain';
+import { CitizenManager } from './CitizenManager';
+import { NameDisplay } from './NameDisplay';
 
 interface Props {
   town: Town;
 }
 export const Stage: FC<Props> = ({ town }) => {
   if (!town.name) {
-    throw new Error("Town must have a name");
+    throw new Error('Town must have a name');
   }
 
   return (
@@ -35,7 +35,7 @@ const styles = {
     border-radius: 0.5rem;
   `,
   stage: css`
-    background-image: url("/assets/stage-background.jpg");
+    background-image: url('/assets/stage-background.jpg');
     background-size: cover;
     height: 100%;
     width: 100%;

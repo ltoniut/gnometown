@@ -1,10 +1,3 @@
 {
-  "rightArrow": "/assets/right-arrow.png",
-  "leftArrow": "/assets/left-arrow.png",
-  "upArrow": "/assets/up-arrow.png",
-  "downArrow": "/assets/down-arrow.png",
-  "titleFont": "/assets/title.otf",
-  "town": "https://raw.githubusercontent.com/rrafols/mobile_test/master/data.json",
-  "stageBackground": "/assets/stage-background.jpg",
-  "managerBackground": "/assets/manager-background.jpg"
+  "town": "https://raw.githubusercontent.com/rrafols/mobile_test/master/data.json"
 }

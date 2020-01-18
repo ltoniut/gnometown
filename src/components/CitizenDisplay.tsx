@@ -1,7 +1,7 @@
-import { css } from "emotion";
-import React, { FC, useState } from "react";
-import { Citizen } from "../domain";
-import { CitizenDetails } from "./CitizenDetails";
+import { css } from 'emotion';
+import React, { FC, useState } from 'react';
+import { Citizen } from '../domain';
+import { CitizenDetails } from './CitizenDetails';
 
 interface Props extends Citizen {}
 
